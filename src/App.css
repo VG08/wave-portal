@@ -15,6 +15,7 @@
 .header {
   text-align: center;
   font-size: 32px;
+  color: white;
   font-weight: 600;
 }
 
@@ -28,7 +29,11 @@
   cursor: pointer;
   margin-top: 16px;
   padding: 8px;
+  background-color: aqua;
   border: 0;
   border-radius: 5px;
   
+}
+body{
+  background-color: rgb(15 23 42);
 }
