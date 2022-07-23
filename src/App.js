@@ -18,7 +18,7 @@ const App = () => {
   const getAllWaves = async () => {
     try {
       const { ethereum } = window;
-      if (ethereum) {
+      if (ethereum && checkIfWalletIsConnected()) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const wavePortalContract = new ethers.Contract(
@@ -76,6 +76,7 @@ const App = () => {
         setCurrentAccount(account);
       } else {
         console.log("No authorized account found");
+        return false
       }
     } catch (error) {
       console.log(error);
@@ -166,13 +167,25 @@ const App = () => {
     }
     await sendWave(message);
   };
+  const getWaveData = async () => {
+    checkIfWalletIsConnected();
+
+    if (currentAccount == null || currentAccount == "") {
+      
+      return;
+    }
+    else{
+      await getAmountOfWaves();
+      await getAllWaves();
+    }
+    
+  }
+
   useEffect(() => {
     checkIfWalletIsConnected();
   }, []);
-  useEffect(() => {
-    getAmountOfWaves();
-  }, []);
-  useEffect(() => {getAllWaves()}, [waveAmount]);
+
+  useEffect(() => {getWaveData()}, [waveAmount, currentAccount]);
   // useEffect(() => {
   //   setLoading()},
   //    [isMining]
